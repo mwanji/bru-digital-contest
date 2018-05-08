@@ -22,9 +22,9 @@ public class ContestPage {
         .withData("keyboard", "false")
         .withData("wrap", "false"),
       div(
-        button(attrs("#prevSlideBtn.btn.btn-light"), Bootstrap.icon("chevron-left")),
-        button(attrs("#digitalBtn.contestAnswerBtn.btn.btn-light.ml-3"), "Digital"),
-        button(attrs("#analogBtn.contestAnswerBtn.btn.btn-light.ml-3"), "Analog")
+        button(attrs("#prevSlideBtn.btn.btn-light.btn-lg"), Bootstrap.icon("chevron-left")),
+        button(attrs("#digitalBtn.contestAnswerBtn.btn.btn-light.ml-3.w-25.btn-lg"), "Digital"),
+        button(attrs("#analogBtn.contestAnswerBtn.btn.btn-light.ml-3.w-25.btn-lg"), "Analog")
       ),
       script(rawHtml("const APP = { contestId: \"" + id + "\", questionNumber: 0 }"))
     ).render();

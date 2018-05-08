@@ -1,5 +1,7 @@
 package brudigitalcontest;
 
+import spark.Spark;
+
 import java.util.Map;
 import java.util.OptionalInt;
 
@@ -12,6 +14,7 @@ public class Application {
 
   public static void main(String[] args) {
     environment = new ProcessBuilder().environment();
+    deploymentPort().ifPresent(Spark::port);
     staticFiles.location("web");
 
     ContestController contestController = new ContestController();

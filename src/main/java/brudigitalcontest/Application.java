@@ -19,6 +19,7 @@ public class Application {
 
     ContestController contestController = new ContestController();
     get("contest/:id", contestController::getContest);
+    post("contest/:id/question/:questionId", contestController::postAnswer);
   }
 
   private static OptionalInt deploymentPort() {

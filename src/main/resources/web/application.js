@@ -6,12 +6,14 @@ const carousel = $(".carousel")
     .carousel();
 
 $(".contestAnswerBtn").click(function () {
-    carousel.carousel("next");
-    console.log("id=" + this.id);
-    /*
-    $.post("/contest/" + APP.id + "/question/NUMBER"), {
-        type: "json",
-        data: "digital"
-    }
-    */
+    console.log("answer=" + this.value);
+    fetch("/contest/" + APP.contestId + "/question/" + APP.questionNumber, {
+        method: "POST",
+        headers: {
+            "content-type": "application/json"
+        },
+        body: JSON.stringify({
+            value: this.value
+        })
+    }).then(res => carousel.carousel("next"));
 });

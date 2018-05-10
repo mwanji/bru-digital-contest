@@ -23,8 +23,8 @@ public class ContestPage {
         .withData("wrap", "false"),
       div(
         button(attrs("#prevSlideBtn.btn.btn-light.btn-lg"), Bootstrap.icon("chevron-left")),
-        button(attrs("#digitalBtn.contestAnswerBtn.btn.btn-light.ml-3.w-25.btn-lg"), "Digital"),
-        button(attrs("#analogBtn.contestAnswerBtn.btn.btn-light.ml-3.w-25.btn-lg"), "Analog")
+        button(attrs("#digitalBtn.contestAnswerBtn.btn.btn-light.ml-3.w-25.btn-lg"), "Digital").withValue("digital"),
+        button(attrs("#analogBtn.contestAnswerBtn.btn.btn-light.ml-3.w-25.btn-lg"), "Analog").withValue("analog")
       ),
       script(rawHtml("const APP = { contestId: \"" + id + "\", questionNumber: 0 }"))
     ).render();

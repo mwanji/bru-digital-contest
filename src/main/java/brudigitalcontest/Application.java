@@ -16,8 +16,11 @@ public class Application {
     environment = new ProcessBuilder().environment();
     deploymentPort().ifPresent(Spark::port);
     staticFiles.location("web");
+    Db db = new Db();
 
-    ContestController contestController = new ContestController();
+    ContestController contestController = new ContestController(new Texts(), db);
+    get("/", contestController::getStartPage);
+    post("contest", contestController::postStart);
     get("contest/:id", contestController::getContest);
     post("contest/:id/question/:questionId", contestController::postAnswer);
   }

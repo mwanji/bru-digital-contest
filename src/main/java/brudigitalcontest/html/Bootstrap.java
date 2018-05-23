@@ -9,7 +9,7 @@ import static j2html.TagCreator.*;
 
 public class Bootstrap {
 
-  static ContainerTag formGroup(ContainerTag label, DomContent input, DomContent... contents) {
+  public static ContainerTag formGroup(ContainerTag label, DomContent input, DomContent... contents) {
     DomContent[] _contents = new DomContent[contents.length + 2];
     _contents[0] = label;
     _contents[1] = input;
@@ -22,7 +22,7 @@ public class Bootstrap {
     return submit("Submit");
   }
 
-  static ContainerTag submit(String text) {
+  public static ContainerTag submit(String text) {
     return button(attrs(".btn.btn-primary"), text).withType("submit");
   }
 

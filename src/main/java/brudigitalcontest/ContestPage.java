@@ -3,21 +3,22 @@ package brudigitalcontest;
 import brudigitalcontest.html.Bootstrap;
 import brudigitalcontest.html.Page;
 import j2html.tags.ContainerTag;
+import lombok.AllArgsConstructor;
 
 import static j2html.TagCreator.*;
 
+@AllArgsConstructor
 public class ContestPage {
 
-  private final String id;
-
-  public ContestPage(String id) {
-    this.id  = id;
-  }
+  private final Long id;
+  private final Contest contest;
 
   public String render() {
     return new Page("Contest",
       div(attrs(".carousel.slide"),
-        div(attrs(".carousel-inner"), carouselItem(true), carouselItem(false), carouselItem(false))
+        div(attrs(".carousel-inner"),
+          carouselItem(contest.getAnswers().get(0), true),
+          each(contest.getAnswers().subList(1, 10), answer -> carouselItem(answer, false)))
       ).withData("interval", "false")
         .withData("keyboard", "false")
         .withData("wrap", "false"),
@@ -30,9 +31,9 @@ public class ContestPage {
     ).render();
   }
 
-  private ContainerTag carouselItem(boolean active) {
+  private ContainerTag carouselItem(Answer answer, boolean active) {
     return div(attrs(".carousel-item" + (active ? ".active" : "")),
       img(attrs(".d-block.w-100")).withSrc("http://via.placeholder.com/900x500")
-    );
+    ).withData("photoId", answer.getPhotoId());
   }
 }

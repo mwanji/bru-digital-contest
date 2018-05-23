@@ -18,7 +18,7 @@ public class StartPage {
       h2(texts.startExplanation2()),
       h2(texts.startNameLabel()),
       form(
-        formGroup(label(texts.startNameLabel()), input()),
+        formGroup(label(texts.startNameLabel()), input().withType("text").withName("name")),
         submit(texts.startSubmitLabel())
       ).withAction("/contest").withMethod("post")
     ).render();

@@ -1,11 +1,15 @@
 package brudigitalcontest;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import lombok.AllArgsConstructor;
 import spark.Request;
 import spark.Response;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import static java.util.Arrays.*;
@@ -14,6 +18,7 @@ import static java.util.Arrays.*;
 public class ContestController {
 
   private static final Random RANDOM = new Random();
+  private static final Type TYPE = new TypeToken<Map<String, String>>(){}.getType();
 
   private final Texts texts;
   private final List<String> photoIds = asList("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20");
@@ -27,9 +32,9 @@ public class ContestController {
     String name = req.queryParams("name");
     List<String> availablePhotoIds = new ArrayList<>(photoIds);
     List<Answer> contestPhotos = new ArrayList<>();
-    while (!availablePhotoIds.isEmpty()) {
+    while (contestPhotos.size() < 10) {
       int i = RANDOM.nextInt(availablePhotoIds.size());
-      contestPhotos.add(new Answer(availablePhotoIds.get(i), 10 - availablePhotoIds.size()));
+      contestPhotos.add(new Answer(availablePhotoIds.get(i), 10 - (availablePhotoIds.size() - 10)));
       availablePhotoIds.remove(i);
     }
     Contest contest = new Contest(name, contestPhotos);
@@ -41,11 +46,22 @@ public class ContestController {
 
   public String getContest(Request req, Response res) {
     Long id = Long.parseLong(req.params("id"));
-    return new ContestPage(id, db.get(Contest.class, id)).render();
+    Contest contest = db.get(Contest.class, id);
+    System.out.println(contest);
+
+    return new ContestPage(id, contest).render();
   }
 
   public Object postAnswer(Request req, Response res) {
+    Long id = Long.valueOf(req.params("id"));
+    int questionId = Integer.parseInt(req.params("questionId"));
+    Map<String, String> json = new Gson().fromJson(req.body(), TYPE);
     System.out.println("ContestController.postAnswer " + req.body());
+
+    Contest contest = db.get(Contest.class, id);
+    contest.getAnswers().get(questionId).setAnswer(json.get("value"));
+    System.out.println(contest);
+
     res.status(200);
 
     return "";

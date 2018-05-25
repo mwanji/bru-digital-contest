@@ -24,8 +24,8 @@ public class ContestController {
   private final List<String> photoIds = asList("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20");
   private final Db db;
 
-  public String getStartPage(Request req, Response res) {
-    return new StartPage(texts).render();
+  public String getIndex(Request req, Response res) {
+    return new IndexPage(texts).render();
   }
 
   public Object postStart(Request req, Response res) {
@@ -39,9 +39,16 @@ public class ContestController {
     }
     Contest contest = new Contest(name, contestPhotos);
     db.save(contest);
-    res.redirect("/contest/" + (db.getAll(Contest.class).size() - 1));
+    res.redirect("/contest/" + (db.getAll(Contest.class).size() - 1) + "/intro");
 
     return null;
+  }
+
+  public String getIntro(Request req, Response res) {
+    Long id = Long.parseLong(req.params("id"));
+    Contest contest = db.get(Contest.class, id);
+
+    return new ContestPage(id, contest, texts).renderIntro();
   }
 
   public String getContest(Request req, Response res) {
@@ -49,7 +56,7 @@ public class ContestController {
     Contest contest = db.get(Contest.class, id);
     System.out.println(contest);
 
-    return new ContestPage(id, contest).render();
+    return new ContestPage(id, contest, texts).render();
   }
 
   public Object postAnswer(Request req, Response res) {

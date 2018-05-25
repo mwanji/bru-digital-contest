@@ -12,6 +12,7 @@ public class ContestPage {
 
   private final Long id;
   private final Contest contest;
+  private final Texts texts;
 
   public String render() {
     return new Page("Contest",
@@ -28,6 +29,14 @@ public class ContestPage {
         button(attrs("#analogBtn.contestAnswerBtn.btn.btn-light.ml-3.w-25.btn-lg"), "Analog").withValue("analog")
       ),
       script(rawHtml("const APP = { contestId: \"" + id + "\", questionNumber: 0 }"))
+    ).render();
+  }
+
+  String renderIntro() {
+    return new Page("Introduction",
+      h1(texts.introHi(contest.getName())),
+      h2(rawHtml(texts.introExplanation())),
+      a(attrs(".btn.btn-primary"), texts.introSubmitLabel()).withHref("/contest/" + id)
     ).render();
   }
 

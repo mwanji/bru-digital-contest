@@ -19,9 +19,10 @@ public class Application {
     Db db = new Db();
 
     ContestController contestController = new ContestController(new Texts(), db);
-    get("/", contestController::getStartPage);
+    get("/", contestController::getIndex);
     post("contest", contestController::postStart);
     get("contest/:id", contestController::getContest);
+    get("contest/:id/intro", contestController::getIntro);
     post("contest/:id/question/:questionId", contestController::postAnswer);
   }
 

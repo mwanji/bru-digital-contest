@@ -2,6 +2,7 @@ package brudigitalcontest;
 
 import lombok.AllArgsConstructor;
 
+import java.text.MessageFormat;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -28,5 +29,17 @@ public class Texts {
 
   public String startSubmitLabel() {
     return resourceBundle.getString("start.submit.label");
+  }
+
+  public String introHi(String name) {
+    return MessageFormat.format(resourceBundle.getString("intro.hi"), new Object[]{ name });
+  }
+
+  public String introExplanation() {
+    return resourceBundle.getString("intro.explanation");
+  }
+
+  public String introSubmitLabel() {
+    return resourceBundle.getString("intro.submit.label");
   }
 }

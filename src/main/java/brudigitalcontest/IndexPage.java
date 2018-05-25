@@ -7,7 +7,7 @@ import static brudigitalcontest.html.Bootstrap.*;
 import static j2html.TagCreator.*;
 
 @AllArgsConstructor
-public class StartPage {
+public class IndexPage {
 
   private final Texts texts;
 
@@ -16,9 +16,9 @@ public class StartPage {
       h1(texts.welcome()),
       h2(texts.startExplanation1()),
       h2(texts.startExplanation2()),
-      h2(texts.startNameLabel()),
+      h3(texts.startNameLabel()),
       form(
-        formGroup(label(texts.startNameLabel()), input().withType("text").withName("name")),
+        div(input().withType("text").withName("name").isRequired()),
         submit(texts.startSubmitLabel())
       ).withAction("/contest").withMethod("post")
     ).render();

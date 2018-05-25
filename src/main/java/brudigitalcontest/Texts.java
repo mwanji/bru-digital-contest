@@ -42,4 +42,13 @@ public class Texts {
   public String introSubmitLabel() {
     return resourceBundle.getString("intro.submit.label");
   }
+
+  public String answerDigital() {
+    return resourceBundle.getString("answer.digital");
+  }
+
+
+  public String answerPhotograph() {
+    return resourceBundle.getString("answer.photograph");
+  }
 }

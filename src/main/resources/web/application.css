@@ -1,0 +1,17 @@
+.contestAnswerBtn {
+    border-radius: 50%;
+    width: 10rem;
+    height: 10rem;
+}
+
+.contestAnswerPhotoCol {
+    text-align: center;
+}
+
+.contestAnswerPhoto {
+    border-radius: 35px;
+}
+
+.contestBtnCol {
+    padding-top: 180px;
+}

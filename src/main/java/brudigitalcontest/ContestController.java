@@ -1,18 +1,22 @@
 package brudigitalcontest;
 
+import static java.util.Arrays.asList;
+
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import lombok.AllArgsConstructor;
 import spark.Request;
 import spark.Response;
 
 import java.lang.reflect.Type;
+import java.time.Instant;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-
-import static java.util.Arrays.*;
+import java.util.Set;
 
 @AllArgsConstructor
 public class ContestController {
@@ -21,7 +25,8 @@ public class ContestController {
   private static final Type TYPE = new TypeToken<Map<String, String>>(){}.getType();
 
   private final Texts texts;
-  private final List<String> photoIds = asList("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20");
+  private final List<String> photoIds = asList("1", "2", "3", "4", "5", "6", "7", "8", "9", "10");
+  private final Set<String> digitalPhotoIds = new HashSet<>(asList("1", "4", "5", "9", "10"));
   private final Db db;
 
   public String getIndex(Request req, Response res) {
@@ -34,7 +39,8 @@ public class ContestController {
     List<Answer> contestPhotos = new ArrayList<>();
     while (contestPhotos.size() < 10) {
       int i = RANDOM.nextInt(availablePhotoIds.size());
-      contestPhotos.add(new Answer(availablePhotoIds.get(i), 10 - (availablePhotoIds.size() - 10)));
+      String correctAnswer = digitalPhotoIds.contains(availablePhotoIds.get(i)) ? "digital" : "analog";
+      contestPhotos.add(new Answer(availablePhotoIds.get(i), 10 - availablePhotoIds.size(), correctAnswer));
       availablePhotoIds.remove(i);
     }
     Contest contest = new Contest(name, contestPhotos);
@@ -56,7 +62,9 @@ public class ContestController {
     Contest contest = db.get(Contest.class, id);
     System.out.println(contest);
 
-    return new ContestPage(id, contest, texts).render();
+    ContestPage contestPage = new ContestPage(id, contest, texts);
+
+    return contest.hasEnded() ? contestPage.renderReview() : contestPage.render();
   }
 
   public Object postAnswer(Request req, Response res) {
@@ -66,11 +74,23 @@ public class ContestController {
     System.out.println("ContestController.postAnswer " + req.body());
 
     Contest contest = db.get(Contest.class, id);
-    contest.getAnswers().get(questionId).setAnswer(json.get("value"));
+    contest.getAnswers().get(questionId).setGivenAnswer(json.get("value"));
     System.out.println(contest);
 
     res.status(200);
+    res.type("application/json");
+    String status = "hasNext";
+    if (questionId == contest.getAnswers().size() - 1)
+    {
+      status = "ended";
+      contest.setEndedAt(Instant.now());
+    }
+    JsonObject body = new JsonObject();
+    body.addProperty("status", status);
+    res.body(body.toString());
 
-    return "";
+    System.out.println(res.body());
+
+    return body.toString();
   }
 }

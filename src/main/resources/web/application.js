@@ -15,5 +15,16 @@ $(".contestAnswerBtn").click(function () {
         body: JSON.stringify({
             value: this.value
         })
-    }).then(res => carousel.carousel("next"));
+    })
+    .then(res => res.json())
+    .then(res => {
+        switch (res.status) {
+            case "hasNext":
+                carousel.carousel("next");
+                break;
+            case "ended":
+                window.location.href = window.location.origin + "/contest/" + APP.contestId;
+                break;
+        }
+    });
 });

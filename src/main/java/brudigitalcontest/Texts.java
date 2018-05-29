@@ -32,7 +32,7 @@ public class Texts {
   }
 
   public String introHi(String name) {
-    return MessageFormat.format(resourceBundle.getString("intro.hi"), new Object[]{ name });
+    return MessageFormat.format(resourceBundle.getString("intro.hi"), name);
   }
 
   public String introExplanation() {
@@ -50,5 +50,34 @@ public class Texts {
 
   public String answerPhotograph() {
     return resourceBundle.getString("answer.photograph");
+  }
+
+  public String reviewIntro(String name)
+  {
+    return  MessageFormat.format(resourceBundle.getString("review.intro"), name);
+  }
+
+  public String reviewAppreciation(long score)
+  {
+    if (score < 5)
+    {
+      return resourceBundle.getString("review.appreciation.lt5");
+    }
+    if (score == 5)
+    {
+      return resourceBundle.getString("review.appreciation.eq5");
+    }
+
+    return resourceBundle.getString("review.appreciation.gt5");
+  }
+
+  public String reviewNextLabel()
+  {
+    return resourceBundle.getString("review.next.label");
+  }
+
+  public String reviewScore(long score, int max)
+  {
+    return MessageFormat.format(resourceBundle.getString("review.score"), score, max);
   }
 }

@@ -1,10 +1,10 @@
 package brudigitalcontest;
 
+import static j2html.TagCreator.*;
+
 import brudigitalcontest.html.Page;
 import j2html.tags.ContainerTag;
 import lombok.AllArgsConstructor;
-
-import static j2html.TagCreator.*;
 
 @AllArgsConstructor
 public class ContestPage {
@@ -44,9 +44,25 @@ public class ContestPage {
     ).render();
   }
 
+  public String renderReview()
+  {
+    return new Page("Review",
+      div(attrs(".row"),
+        div(attrs(".col"),
+          p(texts.reviewIntro(contest.getName())),
+          p(button(attrs(".contestAnswerBtn.btn.btn-outline-secondary"), texts.reviewScore(contest.getScore(), contest.getAnswers().size()))),
+          p(texts.reviewAppreciation(contest.getScore())),
+          p(
+            a(attrs(".btn.btn-outline-secondary"), texts.reviewNextLabel()).withHref("/leaderboard")
+          )
+        )
+      )
+    ).render();
+  }
+
   private ContainerTag carouselItem(Answer answer, boolean active) {
     return div(attrs(".contestAnswerPhoto.carousel-item" + (active ? ".active" : "")),
-      img(attrs(".contestAnswerPhoto")).withSrc("http://via.placeholder.com/300x500")
+      img(attrs(".contestAnswerPhoto")).withSrc("/photos/" + answer.getPhotoId() + ".jpg")
     ).withData("photoId", answer.getPhotoId());
   }
 }

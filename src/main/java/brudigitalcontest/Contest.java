@@ -33,4 +33,14 @@ public class Contest {
   public Duration getDuration() {
     return Duration.between(createdAt, endedAt);
   }
+
+  public boolean hasEnded()
+  {
+    return endedAt != null;
+  }
+
+  public long getScore()
+  {
+    return answers.stream().filter(Answer::isCorrect).count();
+  }
 }

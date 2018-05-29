@@ -11,12 +11,19 @@ import lombok.ToString;
 public class Answer {
 
   private String photoId;
-  private int index;
+  private int    index;
   @Setter
-  private String answer;
+  private String givenAnswer;
+  private String correctAnswer;
 
-  public Answer(String photoId, int index) {
+  public Answer(String photoId, int index, String correctAnswer) {
     this.photoId = photoId;
     this.index = index;
+    this.correctAnswer = correctAnswer;
+  }
+
+  public boolean isCorrect()
+  {
+    return correctAnswer.equals(givenAnswer);
   }
 }

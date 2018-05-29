@@ -1,4 +1,4 @@
-.contestAnswerBtn {
+.circularBtn {
     border-radius: 50%;
     width: 10rem;
     height: 10rem;
@@ -14,4 +14,21 @@
 
 .contestBtnCol {
     padding-top: 180px;
+}
+
+.reviewPhotoContainer p.reviewWrongAnswer {
+    color: red;
+}
+
+.reviewPhotoContainer {
+    position: relative;
+}
+
+.reviewPhotoContainer p {
+    position: absolute;
+    bottom: 0.5em;
+    right: 1em;
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #fff;
 }

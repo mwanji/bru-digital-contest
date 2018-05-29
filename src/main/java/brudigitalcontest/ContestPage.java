@@ -4,6 +4,7 @@ import static j2html.TagCreator.*;
 
 import brudigitalcontest.html.Page;
 import j2html.tags.ContainerTag;
+import j2html.tags.DomContent;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
@@ -17,7 +18,7 @@ public class ContestPage {
     return new Page("Contest",
       div(attrs(".row"),
         div(attrs(".contestBtnCol.col-3.text-right"),
-          button(attrs("#digitalBtn.contestAnswerBtn.btn.btn-outline-secondary"), texts.answerDigital()).withValue("digital")
+          button(attrs("#digitalBtn.contestAnswerBtn.circularBtn.btn.btn-outline-secondary"), texts.answerDigital()).withValue("digital")
         ),
         div(attrs(".col-6.contestAnswerPhotoCol"),
           div(attrs(".carousel.slide"),
@@ -29,7 +30,7 @@ public class ContestPage {
             .withData("wrap", "false")
         ),
         div(attrs(".contestBtnCol.col-3"),
-          button(attrs("#analogBtn.contestAnswerBtn.btn.btn-outline-secondary"), texts.answerPhotograph()).withValue("analog")
+          button(attrs("#analogBtn.contestAnswerBtn.circularBtn.btn.btn-outline-secondary"), texts.answerPhotograph()).withValue("photo")
         )
       ),
       script(rawHtml("const APP = { contestId: \"" + id + "\", questionNumber: 0 }"))
@@ -48,12 +49,18 @@ public class ContestPage {
   {
     return new Page("Review",
       div(attrs(".row"),
-        div(attrs(".col"),
+        div(attrs(".col-3.text-center"),
           p(texts.reviewIntro(contest.getName())),
-          p(button(attrs(".contestAnswerBtn.btn.btn-outline-secondary"), texts.reviewScore(contest.getScore(), contest.getAnswers().size()))),
+          p(button(attrs(".circularBtn.btn.btn-outline-secondary"), texts.reviewScore(contest.getScore(), contest.getAnswers().size()))),
           p(texts.reviewAppreciation(contest.getScore())),
           p(
             a(attrs(".btn.btn-outline-secondary"), texts.reviewNextLabel()).withHref("/leaderboard")
+          )
+        ),
+        div(attrs(".col"),
+          div(attrs(".container-fluid"),
+            div(attrs(".row"), each(contest.getAnswers().subList(0, 5), this::reviewPhoto)),
+            div(attrs(".row.mt-2"), each(contest.getAnswers().subList(5, 10), this::reviewPhoto))
           )
         )
       )
@@ -62,7 +69,17 @@ public class ContestPage {
 
   private ContainerTag carouselItem(Answer answer, boolean active) {
     return div(attrs(".contestAnswerPhoto.carousel-item" + (active ? ".active" : "")),
-      img(attrs(".contestAnswerPhoto")).withSrc("/photos/" + answer.getPhotoId() + ".jpg")
+      img(attrs(".contestAnswerPhoto.img-fluid")).withSrc("/photos/" + answer.getPhotoId() + ".jpg")
     ).withData("photoId", answer.getPhotoId());
+  }
+
+  private DomContent reviewPhoto(Answer answer)
+  {
+    return div(attrs(".col-2"),
+      div(attrs(".reviewPhotoContainer"),
+        img(attrs(".img-fluid")).withSrc("/photos/" + answer.getPhotoId() + ".jpg"),
+        p(answer.getCorrectAnswer()).withCondClass(!answer.isCorrect(), "reviewWrongAnswer")
+      )
+    );
   }
 }

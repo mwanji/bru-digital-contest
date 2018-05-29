@@ -39,7 +39,7 @@ public class ContestController {
     List<Answer> contestPhotos = new ArrayList<>();
     while (contestPhotos.size() < 10) {
       int i = RANDOM.nextInt(availablePhotoIds.size());
-      String correctAnswer = digitalPhotoIds.contains(availablePhotoIds.get(i)) ? "digital" : "analog";
+      String correctAnswer = digitalPhotoIds.contains(availablePhotoIds.get(i)) ? "digital" : "photo";
       contestPhotos.add(new Answer(availablePhotoIds.get(i), 10 - availablePhotoIds.size(), correctAnswer));
       availablePhotoIds.remove(i);
     }

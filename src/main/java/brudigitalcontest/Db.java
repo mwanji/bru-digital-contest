@@ -2,9 +2,11 @@ package brudigitalcontest;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
+import java.util.stream.Collectors;
 
 public class Db {
 
@@ -22,5 +24,13 @@ public class Db {
 
   public <T> List<T> getAll(Class<T> entityClass) {
     return (List<T>) memDb.getOrDefault(entityClass, Collections.emptyList());
+  }
+
+  public List<Contest> getLeaderboard()
+  {
+    return getAll(Contest.class).stream()
+            .filter(Contest::hasEnded)
+            .sorted(Comparator.comparing(Contest::getScore).reversed().thenComparing(Contest::getDuration))
+            .collect(Collectors.toList());
   }
 }

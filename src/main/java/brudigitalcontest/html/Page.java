@@ -1,13 +1,13 @@
 package brudigitalcontest.html;
 
-import static j2html.TagCreator.*;
-
 import j2html.tags.DomContent;
+
+import static j2html.TagCreator.*;
 
 public class Page {
 
-  private String title;
-  private DomContent[] contents;
+  private final String title;
+  private final DomContent[] contents;
 
   public Page(String title, DomContent... contents) {
     this.title = title;

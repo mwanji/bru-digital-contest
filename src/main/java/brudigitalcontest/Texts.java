@@ -80,4 +80,13 @@ public class Texts {
   {
     return MessageFormat.format(resourceBundle.getString("review.score"), score, max);
   }
+
+  public String leaderboardTitle() {
+    return resourceBundle.getString("leaderboard.title");
+  }
+
+
+  public String leaderboardNewLabel() {
+    return resourceBundle.getString("leaderboard.new.label");
+  }
 }

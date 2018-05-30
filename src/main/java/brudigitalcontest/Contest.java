@@ -20,18 +20,23 @@ public class Contest {
   private String name;
   @Size(min = 10, max = 10)
   private List<Answer> answers;
-  private Instant createdAt;
+  private Instant createdAt = Instant.now();
   @Setter
   private Instant endedAt;
 
   public Contest(String name, List<Answer> answers) {
     this.name = name;
     this.answers = answers;
-    this.createdAt = Instant.now();
   }
 
   public Duration getDuration() {
     return Duration.between(createdAt, endedAt);
+  }
+
+  public String getDurationAsString()
+  {
+    long s = getDuration().getSeconds();
+    return String.format("%02d:%02d", (s / 60), (s % 60));
   }
 
   public boolean hasEnded()

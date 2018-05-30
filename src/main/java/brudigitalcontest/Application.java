@@ -18,12 +18,16 @@ public class Application {
     staticFiles.location("web");
     Db db = new Db();
 
-    ContestController contestController = new ContestController(new Texts(), db);
+    Texts texts = new Texts();
+    ContestController contestController = new ContestController(texts, db);
     get("/", contestController::getIndex);
     post("contest", contestController::postStart);
     get("contest/:id", contestController::getContest);
     get("contest/:id/intro", contestController::getIntro);
     post("contest/:id/question/:questionId", contestController::postAnswer);
+
+    LeaderboardController leaderboardController = new LeaderboardController(db, texts);
+    get("leaderboard", leaderboardController::getLeaderboard);
   }
 
   private static OptionalInt deploymentPort() {

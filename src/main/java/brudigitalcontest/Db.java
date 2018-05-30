@@ -15,11 +15,16 @@ public class Db {
   public <T> T save(T entity) {
     List<T> objects = (List<T>) memDb.computeIfAbsent(entity.getClass(), entityClass -> new ArrayList<>());
     objects.add(entity);
+
+    if (entity instanceof Contest) {
+      ((Contest) entity).setId((long) objects.size());
+    }
+
     return entity;
   }
 
   public <T> T get(Class<T> entityClass, Long id) {
-    return entityClass.cast(memDb.getOrDefault(entityClass, Collections.emptyList()).get(id.intValue()));
+    return entityClass.cast(memDb.getOrDefault(entityClass, Collections.emptyList()).get(id.intValue() - 1));
   }
 
   public <T> List<T> getAll(Class<T> entityClass) {

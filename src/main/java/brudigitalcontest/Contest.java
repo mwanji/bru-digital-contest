@@ -16,6 +16,8 @@ import java.util.List;
 @ToString
 public class Contest {
 
+  @Setter
+  private Long id;
   @NotBlank
   private String name;
   @Size(min = 10, max = 10)

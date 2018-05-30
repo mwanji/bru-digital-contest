@@ -10,7 +10,6 @@ import static j2html.TagCreator.*;
 @AllArgsConstructor
 public class ContestPage {
 
-  private final Long id;
   private final Contest contest;
   private final Texts texts;
 
@@ -33,7 +32,7 @@ public class ContestPage {
           button(attrs("#analogBtn.contestAnswerBtn.circularBtn.btn.btn-outline-secondary"), texts.answerPhotograph()).withValue("photo")
         )
       ),
-      script(rawHtml("const APP = { contestId: \"" + id + "\", questionNumber: 0 }"))
+      script(rawHtml("const APP = { contestId: \"" + contest.getId() + "\", questionNumber: 0 }"))
     ).render();
   }
 
@@ -41,7 +40,7 @@ public class ContestPage {
     return new Page("Introduction",
       h1(texts.introHi(contest.getName())),
       h2(rawHtml(texts.introExplanation())),
-      a(attrs(".btn.btn-primary"), texts.introSubmitLabel()).withHref("/contest/" + id)
+      a(attrs(".btn.btn-primary"), texts.introSubmitLabel()).withHref("/contest/" + contest.getId())
     ).render();
   }
 

@@ -24,7 +24,7 @@ public class Page {
         link().withRel("stylesheet").withHref("/application.css"),
         title(title + " - bru.digital")
       ),
-      body(attrs(".pb-2"),
+      body(attrs("#bruDigitalContest.pb-2"),
         div(attrs(".container-fluid.mt-3"), contents),
         script().withSrc("https://code.jquery.com/jquery-3.3.1.slim.min.js").attr("integrity", "sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo").attr("crossorigin", "anonymous"),
         script().withSrc("https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js").attr("integrity", "sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49").attr("crossorigin", "anonymous"),

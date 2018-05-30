@@ -16,6 +16,7 @@ public class Application {
     environment = new ProcessBuilder().environment();
     deploymentPort().ifPresent(Spark::port);
     staticFiles.location("web");
+    staticFiles.expireTime(24 * 60 * 60);
     Db db = new Db();
 
     Texts texts = new Texts();

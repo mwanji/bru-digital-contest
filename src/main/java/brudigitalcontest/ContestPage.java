@@ -38,9 +38,11 @@ public class ContestPage {
 
   String renderIntro() {
     return new Page("Introduction",
-      h1(texts.introHi(contest.getName())),
-      h2(rawHtml(texts.introExplanation())),
-      a(attrs(".btn.btn-outline-primary.btn-lg.col-4"), texts.introSubmitLabel()).withHref("/contest/" + contest.getId())
+      div(attrs(".text-center"),
+        h1(texts.introHi(contest.getName())),
+        h2(rawHtml(texts.introExplanation())),
+        a(attrs(".btn.btn-outline-primary.btn-lg.col-4"), texts.introSubmitLabel()).withHref("/contest/" + contest.getId())
+      )
     ).render();
   }
 

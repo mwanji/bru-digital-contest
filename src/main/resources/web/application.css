@@ -41,7 +41,7 @@ body#bruDigitalContest {
 }
 
 .reviewPhotoContainer p.reviewWrongAnswer {
-    color: red;
+    color: #f59999;
 }
 
 .reviewPhotoContainer {
@@ -50,9 +50,9 @@ body#bruDigitalContest {
 
 .reviewPhotoContainer p {
     position: absolute;
-    bottom: 0.5em;
-    right: 1em;
+    bottom: 0.1em;
+    right: 0.3em;
     font-size: 1.5em;
-    font-weight: bold;
-    color: #fff;
+    color: #d1f5db;
+    margin: 0;
 }

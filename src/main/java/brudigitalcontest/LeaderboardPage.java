@@ -24,7 +24,7 @@ public class LeaderboardPage
             th("time")
           ),
           each(contests, contest -> tr(
-            td(contest.getName()),
+            td(a(contest.getName()).withHref("/contest/" + contest.getId())),
             td(Long.toString(contest.getScore())),
             td(contest.getDurationAsString())
           ))

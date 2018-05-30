@@ -1,11 +1,11 @@
 package brudigitalcontest;
 
-import static j2html.TagCreator.*;
-
 import brudigitalcontest.html.Page;
 import j2html.tags.ContainerTag;
 import j2html.tags.DomContent;
 import lombok.AllArgsConstructor;
+
+import static j2html.TagCreator.*;
 
 @AllArgsConstructor
 public class ContestPage {
@@ -54,7 +54,10 @@ public class ContestPage {
           p(button(attrs(".circularBtn.btn.btn-outline-secondary"), texts.reviewScore(contest.getScore(), contest.getAnswers().size()))),
           p(texts.reviewAppreciation(contest.getScore())),
           p(
-            a(attrs(".btn.btn-outline-secondary"), texts.reviewNextLabel()).withHref("/leaderboard")
+            a(attrs(".btn.btn-outline-secondary.btn-block"), texts.reviewNextLabel()).withHref("/leaderboard")
+          ),
+          p(
+            a(attrs(".btn.btn-outline-primary.btn-block"), texts.leaderboardNewLabel()).withHref("/")
           )
         ),
         div(attrs(".col"),

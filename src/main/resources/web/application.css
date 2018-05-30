@@ -15,7 +15,7 @@
     src: url(/fonts/Flama-Extrabold.otf);
 }
 
-body#bruDigitalContest, body#bruDigitalContest .display-1 {
+body#bruDigitalContest {
     font-family: Flama-Book, -apple-system, BlinkMacSystemFont,
         "Segoe UI", "Roboto", "Ubuntu",
         "Helvetica Neue", Arial, sans-serif,

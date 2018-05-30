@@ -40,7 +40,7 @@ public class ContestPage {
     return new Page("Introduction",
       h1(texts.introHi(contest.getName())),
       h2(rawHtml(texts.introExplanation())),
-      a(attrs(".btn.btn-primary"), texts.introSubmitLabel()).withHref("/contest/" + contest.getId())
+      a(attrs(".btn.btn-outline-primary.btn-lg.col-4"), texts.introSubmitLabel()).withHref("/contest/" + contest.getId())
     ).render();
   }
 

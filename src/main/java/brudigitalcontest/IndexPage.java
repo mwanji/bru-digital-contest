@@ -13,12 +13,14 @@ public class IndexPage {
 
   public String render() {
     return new Page("Start",
-      h1(texts.welcome()),
-      h2(texts.startExplanation1()),
-      h2(texts.startExplanation2()),
-      h3(texts.startNameLabel()),
-      form(
-        div(input().withType("text").withName("name").isRequired()),
+      h1(attrs(".display-2"), texts.welcome()),
+      h2(attrs(".display-3"), texts.startExplanation1()),
+      h2(attrs(".mt-5"), texts.startExplanation2()),
+      form(attrs(".text-center.mt-5"),
+        div(attrs(".form-group"),
+          label(h3(texts.startNameLabel())),
+          input(attrs(".form-control.col-4.m-auto")).withType("text").withName("name").isRequired()
+        ),
         submit(texts.startSubmitLabel())
       ).withAction("/contest").withMethod("post")
     ).render();

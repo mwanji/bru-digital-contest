@@ -23,7 +23,7 @@ public class Bootstrap {
   }
 
   public static ContainerTag submit(String text) {
-    return button(attrs(".btn.btn-primary"), text).withType("submit");
+    return button(attrs(".btn.btn-outline-primary.col-4"), text).withType("submit");
   }
 
   static String ifInvalidInput(String key, Map<String, String> errors) {

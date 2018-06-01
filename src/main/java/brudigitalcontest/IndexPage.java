@@ -32,7 +32,7 @@ public class IndexPage {
                 form(attrs(".form-inline"),
                   input(attrs(".bru-bg-light.bru-height-high.form-control.form-control-lg.col-8")).withType("text").withName("name").isRequired(),
                   button(attrs(".btn.bg-white.bru-height-high.bru-text-light.col-4"), h2(attrs(".bru-bold"), texts.startSubmitLabel())).withType("submit")
-                )
+                ).withAction("/contest").withMethod("post")
               )
             )
           )

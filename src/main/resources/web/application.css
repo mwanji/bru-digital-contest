@@ -1,3 +1,8 @@
+:root {
+    --color-light: rgb(73, 177, 229);
+    --color-dark: rgb(0, 71, 146);
+}
+
 @font-face {
     font-family: Flama-Book;
     src: url(/fonts/Flama-Book.otf);
@@ -55,4 +60,74 @@ body#bruDigitalContest {
     font-size: 1.5em;
     color: #d1f5db;
     margin: 0;
+}
+
+body.splash, html.splash {
+    height: 100%;
+    margin: 0;
+}
+
+div.splash {
+    height: 100%;
+    background: url(/Front_Image.jpg) no-repeat center;
+    background-size: cover;
+}
+
+.splashTitleBox {
+    background-color: #fff;
+    opacity: 0.9;
+    font-weight: 900;
+}
+
+.splashContainer {
+    display: inline-block;
+}
+
+.splash .container-fluid, .splash .row {
+    height: 100%;
+}
+
+.splash h1 {
+    font-weight: 900;
+}
+
+.splash h4 {
+    font-weight: bold;
+}
+
+.bru-text-light {
+    color: var(--color-light);
+}
+
+.bru-bg-light {
+    background-color: var(--color-light);
+}
+
+.splash input {
+    border-color: var(--color-light);
+    border-radius: 0;
+}
+
+.splash button {
+    border-radius: 0;
+}
+
+.bru-text-dark {
+    color: var(--color-dark);
+}
+
+.bru-bg-dark {
+    background-color: var(--color-dark);
+}
+
+.bru-bold {
+    font-weight: 900;
+}
+
+.bru-semi-bold {
+    font-weight: bold;
+}
+
+.bru-height-high {
+    height: 5rem;
 }

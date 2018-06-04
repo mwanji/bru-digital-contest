@@ -112,6 +112,20 @@ div.splash {
     border-radius: 0;
 }
 
+.contestGrid {
+    display: grid;
+    grid-template-columns: 1fr minmax(500px,810px) 1fr;
+    align-items: center;
+    justify-items: center;
+}
+
+.contestBtn {
+    width: 100%;
+    height: 20vw;
+    border-radius: 0;
+    border: 0;
+}
+
 .bru-text-dark {
     color: var(--color-dark);
 }

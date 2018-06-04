@@ -4,7 +4,7 @@ const carousel = $(".carousel")
     })
     .carousel();
 
-$(".contestAnswerBtn").click(function () {
+$("#analogBtn,#digitalBtn").click(function () {
     fetch("/contest/" + APP.contestId + "/question/" + APP.questionNumber, {
         method: "POST",
         headers: {

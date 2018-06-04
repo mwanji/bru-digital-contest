@@ -5,6 +5,7 @@ import j2html.tags.ContainerTag;
 import j2html.tags.DomContent;
 import lombok.AllArgsConstructor;
 
+import static brudigitalcontest.html.Bootstrap.row;
 import static j2html.TagCreator.*;
 
 @AllArgsConstructor
@@ -38,11 +39,19 @@ public class ContestPage {
 
   String renderIntro() {
     return new Page("Introduction",
-      div(attrs(".text-center"),
-        h1(texts.introHi(contest.getName())),
-        h2(rawHtml(texts.introExplanation())),
-        a(attrs(".btn.btn-outline-primary.btn-lg.col-4"), texts.introSubmitLabel()).withHref("/contest/" + contest.getId())
-      )
+      div(attrs(".row"),
+        div(attrs(".bru-bg-dark.col-2.offset-2.text-white.text-center.p-3"),
+          h1(attrs(".bru-semi-bold"), texts.introWelcome())
+        )
+      ),
+      div(attrs(".row"),
+        div(attrs(".bru-bg-light.col-4.offset-4.text-white.text-center.p-3"),
+          h2(attrs(".bru-semi-bold"), texts.introHi(contest.getName()))
+        )
+      ),
+      row(div(attrs(".bru-bg-dark.col-2.offset-2.text-white.text-center.p-3"), h2(texts.introExplanation1()))),
+      row(div(attrs(".bru-bg-light.col-4.offset-4.text-white.text-center.p-3"), h2(rawHtml(texts.introExplanation())))),
+      row(div(attrs(".bru-bg-dark.col-2.offset-8.text-white.text-center.p-3"), h2(a(attrs(".text-white"), texts.introSubmitLabel()).withHref("/contest/" + contest.getId()))))
     ).render();
   }
 

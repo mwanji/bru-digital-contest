@@ -15,12 +15,8 @@ public class Texts {
     return resourceBundle.getString("start.welcome");
   }
 
-  public String startExplanation1() {
+  public String introExplanation1() {
     return resourceBundle.getString("start.explanation.1");
-  }
-
-  public String startExplanation2() {
-    return resourceBundle.getString("start.explanation.2");
   }
 
   public String startNameLabel() {
@@ -33,6 +29,10 @@ public class Texts {
 
   public String introHi(String name) {
     return MessageFormat.format(resourceBundle.getString("intro.hi"), name);
+  }
+
+  public String introWelcome() {
+    return resourceBundle.getString("intro.welcome");
   }
 
   public String introExplanation() {

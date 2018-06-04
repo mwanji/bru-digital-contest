@@ -37,4 +37,8 @@ public class Bootstrap {
   public static ContainerTag icon(String name) {
     return span(attrs(".oi.oi-" + name)).withTitle(name).attr("aria-hidden", true);
   }
+
+  public static DomContent row(DomContent... contents) {
+    return div(attrs(".row"), contents);
+  }
 }

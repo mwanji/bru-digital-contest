@@ -1,6 +1,8 @@
+const questionCount = $("#contestQuestionCount");
 const carousel = $(".carousel")
     .on("slid.bs.carousel", function (event) {
         APP.questionNumber = event.to;
+        questionCount.html((APP.questionNumber + 1) + "/10");
     })
     .carousel();
 

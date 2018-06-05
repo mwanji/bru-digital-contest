@@ -4,16 +4,18 @@ import brudigitalcontest.html.GridPage;
 import brudigitalcontest.html.Page;
 import j2html.tags.ContainerTag;
 import j2html.tags.DomContent;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
-import static brudigitalcontest.html.Bootstrap.row;
+import static brudigitalcontest.html.Bootstrap.*;
 import static j2html.TagCreator.*;
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class ContestPage {
 
   private final Contest contest;
   private final Texts texts;
+  private int photoReviewColIndex = 0;
+  private int photoReviewRowIndex = 1;
 
   public String render() {
     return new GridPage().render(
@@ -57,7 +59,7 @@ public class ContestPage {
 
   public String renderReview() {
     return new GridPage().render(
-      div(attrs(".reviewGrid.pt-4.px-2.text-white"),
+      div(attrs(".reviewGrid.p-2.text-white"),
         div(attrs("#reviewTextContainer.text-white.text-center"),
           div(attrs(".bru-bg-light"),
             h1(attrs(".mt-3.mb-3"), texts.reviewIntro(contest.getName())),
@@ -80,9 +82,18 @@ public class ContestPage {
 
   private DomContent reviewPhoto(Answer answer)
   {
-    return div(attrs(".reviewPhotoContainer"),
-      img(attrs(".img-fluid")).withSrc("/photos/" + answer.getPhotoId() + ".jpg"),
-      p(answer.getCorrectAnswer()).withCondClass(!answer.isCorrect(), "reviewWrongAnswer")
+    int colIndex = ++photoReviewColIndex;
+    String colClass = "bru-review-photo-col-" + colIndex;
+    String rowClass = "bru-review-photo-row-" + photoReviewRowIndex;
+
+    if (photoReviewColIndex == 5) {
+      photoReviewColIndex = 0;
+      photoReviewRowIndex = photoReviewRowIndex == 1 ? 2 : 1;
+    }
+
+    return join(
+      img().withSrc("/photos/" + answer.getPhotoId() + ".jpg").withClasses("img-fluid", rowClass, colClass),
+      h3(answer.getCorrectAnswer()).withClasses(rowClass, colClass, "bru-review-photo-text", "mr-2", "mb-2", (answer.isCorrect() ? "reviewRightAnswer" : "reviewWrongAnswer"))
     );
   }
 }

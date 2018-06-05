@@ -31,6 +31,7 @@ body#bruDigitalContest {
     border-radius: 50%;
     width: 10rem;
     height: 10rem;
+    padding-top: 3.8rem;
 }
 
 .contestAnswerPhotoCol {
@@ -60,21 +61,12 @@ body#bruDigitalContest {
     grid-row-gap: 0.3rem;
 }
 
-.reviewPhotoContainer p.reviewWrongAnswer {
-    color: #f59999;
-}
-
-.reviewPhotoContainer {
-    position: relative;
-}
-
-.reviewPhotoContainer p {
-    position: absolute;
-    bottom: 0.1em;
-    right: 0.3em;
-    font-size: 1.5em;
+.reviewRightAnswer {
     color: #d1f5db;
-    margin: 0;
+}
+
+.reviewWrongAnswer {
+    color: #f59999;
 }
 
 .bru-index-bg {
@@ -136,4 +128,37 @@ body#bruDigitalContest {
 
 .bru-height-high {
     height: 5rem;
+}
+
+.bru-review-photo-row-1 {
+    grid-row-start: 1;
+}
+
+.bru-review-photo-row-2 {
+    grid-row-start: 2;
+}
+
+.bru-review-photo-col-1 {
+    grid-column-start: 2;
+}
+
+.bru-review-photo-col-2 {
+    grid-column-start: 3;
+}
+
+.bru-review-photo-col-3 {
+    grid-column-start: 4;
+}
+
+.bru-review-photo-col-4 {
+    grid-column-start: 5;
+}
+
+.bru-review-photo-col-5 {
+    grid-column-start: 6;
+}
+
+.bru-review-photo-text {
+    align-self: end;
+    justify-self: end;
 }

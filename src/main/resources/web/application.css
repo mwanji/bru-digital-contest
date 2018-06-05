@@ -62,13 +62,7 @@ body#bruDigitalContest {
     margin: 0;
 }
 
-body.splash, html.splash {
-    height: 100%;
-    margin: 0;
-}
-
-div.splash {
-    height: 100%;
+.bru-index-bg {
     background: url(/Front_Image.jpg) no-repeat center;
     background-size: cover;
 }
@@ -79,22 +73,6 @@ div.splash {
     font-weight: 900;
 }
 
-.splashContainer {
-    display: inline-block;
-}
-
-.splash .container-fluid, .splash .row {
-    height: 100%;
-}
-
-.splash h1 {
-    font-weight: 900;
-}
-
-.splash h4 {
-    font-weight: bold;
-}
-
 .bru-text-light {
     color: var(--color-light);
 }
@@ -103,12 +81,11 @@ div.splash {
     background-color: var(--color-light);
 }
 
-.splash input {
+.bru-btn-light, input.bru-bg-light {
     border-color: var(--color-light);
-    border-radius: 0;
 }
 
-.splash button {
+.bru-square {
     border-radius: 0;
 }
 

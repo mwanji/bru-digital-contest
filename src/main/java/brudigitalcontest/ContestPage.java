@@ -55,29 +55,21 @@ public class ContestPage {
     ).render();
   }
 
-  public String renderReview()
-  {
-    return new Page("Review",
-      div(attrs(".row"),
-        div(attrs(".col-3.text-center"),
-          p(texts.reviewIntro(contest.getName())),
-          p(button(attrs(".circularBtn.btn.btn-outline-secondary"), texts.reviewScore(contest.getScore(), contest.getAnswers().size()))),
-          p(texts.reviewAppreciation(contest.getScore())),
-          p(
-            a(attrs(".btn.btn-outline-secondary.btn-block"), texts.reviewNextLabel()).withHref("/leaderboard")
+  public String renderReview() {
+    return new GridPage().render(
+      div(attrs(".reviewGrid.pt-4.px-2.text-white"),
+        div(attrs("#reviewTextContainer.text-white.text-center"),
+          div(attrs(".bru-bg-light"),
+            h1(attrs(".mt-3.mb-3"), texts.reviewIntro(contest.getName())),
+            div(attrs(".circularBtn.bg-white.bru-text-light.mx-auto.my-5.d-inline-block"), h3(texts.reviewScore(contest.getScore(), contest.getAnswers().size()))),
+            p(attrs(".my-5"), texts.reviewAppreciation(contest.getScore()))
           ),
-          p(
-            a(attrs(".btn.btn-outline-primary.btn-block"), texts.leaderboardNewLabel()).withHref("/")
-          )
+          a(attrs(".bru-bg-dark.text-white"), h2(texts.reviewNextLabel())).withHref("/leaderboard"),
+          a(attrs(".bru-bg-dark.text-white"), h2(texts.leaderboardNewLabel())).withHref("/")
         ),
-        div(attrs(".col"),
-          div(attrs(".container-fluid"),
-            div(attrs(".row"), each(contest.getAnswers().subList(0, 5), this::reviewPhoto)),
-            div(attrs(".row.mt-2"), each(contest.getAnswers().subList(5, 10), this::reviewPhoto))
-          )
-        )
+        each(contest.getAnswers(), this::reviewPhoto)
       )
-    ).render();
+    );
   }
 
   private ContainerTag carouselItem(Answer answer, boolean active) {
@@ -88,11 +80,9 @@ public class ContestPage {
 
   private DomContent reviewPhoto(Answer answer)
   {
-    return div(attrs(".col-2"),
-      div(attrs(".reviewPhotoContainer"),
-        img(attrs(".img-fluid")).withSrc("/photos/" + answer.getPhotoId() + ".jpg"),
-        p(answer.getCorrectAnswer()).withCondClass(!answer.isCorrect(), "reviewWrongAnswer")
-      )
+    return div(attrs(".reviewPhotoContainer"),
+      img(attrs(".img-fluid")).withSrc("/photos/" + answer.getPhotoId() + ".jpg"),
+      p(answer.getCorrectAnswer()).withCondClass(!answer.isCorrect(), "reviewWrongAnswer")
     );
   }
 }

@@ -45,6 +45,21 @@ body#bruDigitalContest {
     padding-top: 180px;
 }
 
+.reviewGrid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-column-gap: 0.3rem;
+    grid-row-gap: 0.3rem;
+}
+
+#reviewTextContainer {
+    grid-row-start: 1;
+    grid-row-end: 3;
+    display: grid;
+    grid-template-rows: auto 50px 50px;
+    grid-row-gap: 0.3rem;
+}
+
 .reviewPhotoContainer p.reviewWrongAnswer {
     color: #f59999;
 }

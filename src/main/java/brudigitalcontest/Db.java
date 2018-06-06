@@ -1,39 +1,43 @@
 package brudigitalcontest;
 
-import java.util.ArrayList;
-import java.util.Collections;
+import org.jdbi.v3.core.Jdbi;
+
 import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.stream.Collectors;
 
 public class Db {
 
   private final ConcurrentMap<Class<?>, List<?>> memDb = new ConcurrentHashMap<>();
+  private final CopyOnWriteArrayList<Contest> contests = new CopyOnWriteArrayList<>();
+  private final Jdbi jdbi = null;
 
-  public <T> T save(T entity) {
-    List<T> objects = (List<T>) memDb.computeIfAbsent(entity.getClass(), entityClass -> new ArrayList<>());
-    objects.add(entity);
+  public Long save(Contest entity) {
+    Long id = jdbi.withHandle(handle -> handle.createUpdate("INSERT INTO contests(name, createdAt) VALUES(:name, :createdAt)")
+        .bindBean(entity)
+        .executeAndReturnGeneratedKeys()
+        .mapTo(Long.class)
+        .findOnly()
+    );
+    contests.add(entity);
 
-    if (entity instanceof Contest) {
-      ((Contest) entity).setId((long) objects.size());
-    }
-
-    return entity;
+    return (long) contests.size();
   }
 
-  public <T> T get(Class<T> entityClass, Long id) {
-    return entityClass.cast(memDb.getOrDefault(entityClass, Collections.emptyList()).get(id.intValue() - 1));
+  public Contest getContest(Long id) {
+    return contests.get(id.intValue() - 1);
   }
 
-  public <T> List<T> getAll(Class<T> entityClass) {
-    return (List<T>) memDb.getOrDefault(entityClass, Collections.emptyList());
+  public List<Contest> getAllContests() {
+    return contests;
   }
 
   public List<Contest> getLeaderboard()
   {
-    return getAll(Contest.class).stream()
+    return getAllContests().stream()
             .filter(Contest::hasEnded)
             .sorted(Comparator.comparing(Contest::getScore).reversed().thenComparing(Contest::getDuration))
             .collect(Collectors.toList());

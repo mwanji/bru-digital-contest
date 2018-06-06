@@ -9,9 +9,10 @@ import spark.Response;
 
 import java.lang.reflect.Type;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.*;
 
-import static java.util.Arrays.asList;
+import static java.util.Arrays.*;
 
 @AllArgsConstructor
 public class ContestController {
@@ -39,22 +40,22 @@ public class ContestController {
       availablePhotoIds.remove(i);
     }
 
-    Contest contest = db.save(new Contest(name, contestPhotos));
-    res.redirect("/contest/" + contest.getId() + "/intro");
+    Long contestId = db.save(new Contest(name, contestPhotos));
+    res.redirect("/contest/" + contestId + "/intro");
 
     return null;
   }
 
   public String getIntro(Request req, Response res) {
     Long id = Long.parseLong(req.params("id"));
-    Contest contest = db.get(Contest.class, id);
+    Contest contest = db.getContest(id);
 
     return new ContestPage(contest, texts).renderIntro();
   }
 
   public String getContest(Request req, Response res) {
     Long id = Long.parseLong(req.params("id"));
-    Contest contest = db.get(Contest.class, id);
+    Contest contest = db.getContest(id);
     System.out.println(contest);
 
     ContestPage contestPage = new ContestPage(contest, texts);
@@ -67,7 +68,7 @@ public class ContestController {
     int questionId = Integer.parseInt(req.params("questionId"));
     Map<String, String> json = new Gson().fromJson(req.body(), TYPE);
 
-    Contest contest = db.get(Contest.class, id);
+    Contest contest = db.getContest(id);
     contest.getAnswers().get(questionId).setGivenAnswer(json.get("value"));
 
     res.status(200);

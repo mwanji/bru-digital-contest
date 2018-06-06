@@ -2,10 +2,8 @@ package brudigitalcontest;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
-import org.apache.commons.cli.CommandLine;
-import org.apache.commons.cli.DefaultParser;
-import org.apache.commons.cli.Options;
-import org.apache.commons.cli.ParseException;
+import org.jdbi.v3.core.Jdbi;
+import org.jdbi.v3.core.mapper.reflect.BeanMapper;
 import spark.Spark;
 
 import java.util.Map;
@@ -18,30 +16,26 @@ public class Application {
   private static Map<String, String> environment;
 
 
-  public static void main(String[] args) throws ParseException {
+  public static void main(String[] args) {
     environment = new ProcessBuilder().environment();
     deploymentPort().ifPresent(Spark::port);
     staticFiles.location("web");
     staticFiles.expireTime(24 * 60 * 60);
 
-    Options cliOptions = new Options();
-    cliOptions.addOption("bruJdbcUrl", true, "The JDBC url");
-    cliOptions.addOption("bruJdbcUser", true, "The JDBC user name");
-    cliOptions.addOption("bruJdbcPassword", true, "The JDBC user password");
-    CommandLine cli = new DefaultParser().parse(cliOptions, args);
-
     HikariConfig config = new HikariConfig();
-    config.setJdbcUrl(cli.getOptionValue("bruJdbcUrl"));
-    config.setUsername(cli.getOptionValue("bruJdbcUser"));
-    config.setPassword(cli.getOptionValue("bruJdbcPassword"));
+    config.setJdbcUrl(environment.get("BRU_JDBC_URL") + "?zeroDateTimeBehavior=convertToNull");
+    config.setUsername(environment.get("BRU_JDBC_USER"));
+    config.setPassword(environment.get("BRU_JDBC_PASSWORD"));
+    config.setMinimumIdle(2);
     config.addDataSourceProperty("cachePrepStmts", "true");
     config.addDataSourceProperty("prepStmtCacheSize", "250");
     config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
-    config.setSchema("brudigitalcontest");
 
     HikariDataSource ds = new HikariDataSource(config);
-
-    Db db = new Db();
+    Jdbi jdbi = Jdbi.create(ds);
+    jdbi.registerRowMapper(BeanMapper.factory(Contest.class));
+    jdbi.registerRowMapper(BeanMapper.factory(Answer.class));
+    Db db = new Db(jdbi);
 
     Texts texts = new Texts();
     ContestController contestController = new ContestController(texts, db);

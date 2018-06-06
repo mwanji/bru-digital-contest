@@ -25,7 +25,7 @@ public class ContestPage {
           div(attrs(".carousel.slide"),
             div(attrs(".carousel-inner"),
               carouselItem(contest.getAnswers().get(0), true),
-              each(contest.getAnswers().subList(1, 10), answer -> carouselItem(answer, false)))
+              each(contest.getAnswers().subList(1, contest.getAnswers().size()), answer -> carouselItem(answer, false)))
           ).withData("interval", "false")
             .withData("keyboard", "false")
             .withData("wrap", "false")

@@ -1,29 +1,29 @@
 package brudigitalcontest;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
+import org.jdbi.v3.core.mapper.reflect.ColumnName;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.time.Duration;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
 
 @NoArgsConstructor
-@Getter
-@ToString
+@AllArgsConstructor
+@Data
 public class Contest {
 
-  @Setter
   private Long id;
   @NotBlank
+  @Getter(onMethod = @__(@ColumnName("contestant_name")))
   private String name;
   @Size(min = 10, max = 10)
-  private List<Answer> answers;
+  private List<Answer> answers = new ArrayList<>();
+  @Getter(onMethod = @__(@ColumnName("created_at")))
   private Instant createdAt = Instant.now();
-  @Setter
+  @Getter(onMethod = @__(@ColumnName("ended_at")))
   private Instant endedAt;
 
   public Contest(String name, List<Answer> answers) {

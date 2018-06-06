@@ -1,19 +1,21 @@
 package brudigitalcontest;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import org.jdbi.v3.core.mapper.reflect.ColumnName;
 
 @NoArgsConstructor
-@Getter
-@ToString
+@Data
 public class Answer {
 
+  @Getter(onMethod = @__(@ColumnName("photo_id")))
   private String photoId;
+  @Getter(onMethod = @__(@ColumnName("answer_index")))
   private int    index;
-  @Setter
+  @Getter(onMethod = @__(@ColumnName("given_answer")))
   private String givenAnswer;
+  @Getter(onMethod = @__(@ColumnName("correct_answer")))
   private String correctAnswer;
 
   public Answer(String photoId, int index, String correctAnswer) {

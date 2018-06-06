@@ -8,11 +8,9 @@ import spark.Request;
 import spark.Response;
 
 import java.lang.reflect.Type;
-import java.time.Instant;
-import java.util.ArrayList;
 import java.util.*;
 
-import static java.util.Arrays.*;
+import static java.util.Arrays.asList;
 
 @AllArgsConstructor
 public class ContestController {
@@ -40,7 +38,7 @@ public class ContestController {
       availablePhotoIds.remove(i);
     }
 
-    Long contestId = db.save(new Contest(name, contestPhotos));
+    Long contestId = db.insert(new Contest(name, contestPhotos));
     res.redirect("/contest/" + contestId + "/intro");
 
     return null;
@@ -65,19 +63,18 @@ public class ContestController {
 
   public Object postAnswer(Request req, Response res) {
     Long id = Long.valueOf(req.params("id"));
-    int questionId = Integer.parseInt(req.params("questionId"));
+    int questionIndex = Integer.parseInt(req.params("questionId"));
     Map<String, String> json = new Gson().fromJson(req.body(), TYPE);
 
-    Contest contest = db.getContest(id);
-    contest.getAnswers().get(questionId).setGivenAnswer(json.get("value"));
+    db.updateAnswer(id, questionIndex, json.get("value"));
 
     res.status(200);
     res.type("application/json");
     String status = "hasNext";
-    if (questionId == contest.getAnswers().size() - 1)
+    if (questionIndex == 9)
     {
       status = "ended";
-      contest.setEndedAt(Instant.now());
+      db.endContest(id);
     }
     JsonObject body = new JsonObject();
     body.addProperty("status", status);

@@ -54,7 +54,6 @@ public class ContestController {
   public String getContest(Request req, Response res) {
     Long id = Long.parseLong(req.params("id"));
     Contest contest = db.getContest(id);
-    System.out.println(contest);
 
     ContestPage contestPage = new ContestPage(contest, texts);
 
